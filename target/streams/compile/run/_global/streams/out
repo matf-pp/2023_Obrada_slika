@@ -1,0 +1,31 @@
+[0m[[0m[31merror[0m] [0m[0mjava.lang.RuntimeException: Exception in Application start method[0m
+[0m[[0m[31merror[0m] [0m[0m	at com.sun.javafx.application.LauncherImpl.launchApplication1(LauncherImpl.java:900)[0m
+[0m[[0m[31merror[0m] [0m[0m	at com.sun.javafx.application.LauncherImpl.lambda$launchApplication$2(LauncherImpl.java:195)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.lang.Thread.run(Thread.java:829)[0m
+[0m[[0m[31merror[0m] [0m[0mCaused by: java.io.FileNotFoundException: home/irina/Desktop/image.jpeg (No such file or directory)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.io.FileInputStream.open0(Native Method)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.io.FileInputStream.open(FileInputStream.java:219)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:157)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:112)[0m
+[0m[[0m[31merror[0m] [0m[0m	at Main$.start(Main.scala:16)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scalafx.application.JFXApp3.main$$anonfun$1(JFXApp3.scala:287)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scalafx.application.JFXApp3.init$$anonfun$1(JFXApp3.scala:302)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:15)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.runtime.function.JProcedure1.apply(JProcedure1.java:10)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.collection.IterableOnceOps.foreach(IterableOnce.scala:575)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.collection.IterableOnceOps.foreach$(IterableOnce.scala:573)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.collection.AbstractIterable.foreach(Iterable.scala:933)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scalafx.application.JFXApp3.init(JFXApp3.scala:302)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scalafx.application.JFXApp3.init$(JFXApp3.scala:237)[0m
+[0m[[0m[31merror[0m] [0m[0m	at Main$.init(Main.scala:13)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scalafx.application.AppHelper3.start(AppHelper3.scala:33)[0m
+[0m[[0m[31merror[0m] [0m[0m	at com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$9(LauncherImpl.java:846)[0m
+[0m[[0m[31merror[0m] [0m[0m	at com.sun.javafx.application.PlatformImpl.lambda$runAndWait$12(PlatformImpl.java:474)[0m
+[0m[[0m[31merror[0m] [0m[0m	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:447)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.security.AccessController.doPrivileged(Native Method)[0m
+[0m[[0m[31merror[0m] [0m[0m	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:446)[0m
+[0m[[0m[31merror[0m] [0m[0m	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:96)[0m
+[0m[[0m[31merror[0m] [0m[0m	at com.sun.glass.ui.gtk.GtkApplication._runLoop(Native Method)[0m
+[0m[[0m[31merror[0m] [0m[0m	at com.sun.glass.ui.gtk.GtkApplication.lambda$runLoop$11(GtkApplication.java:277)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.lang.Thread.run(Thread.java:829)[0m
+[0m[[0m[31merror[0m] [0m[0m(Compile / [31mrun[0m) Exception in Application start method[0m

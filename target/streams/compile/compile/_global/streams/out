@@ -1,0 +1,9 @@
+[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E049] Reference Error: /home/irina/Desktop/project/project/src/main/scala/Main.scala:59:18 [0m[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m59 |[0m                  color = DarkGray[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m                  ^^^^^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0mReference to color is ambiguous,[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0mit is both defined in [33mmethod[0m [35mstart[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0mand inherited subsequently in [33manonymous class[0m [35mscalafx.scene.effect.DropShadow[0m {...}[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m longer explanation available when compiling with `-explain`[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m
