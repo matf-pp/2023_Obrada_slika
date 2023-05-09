@@ -8,43 +8,61 @@ import scalafx.scene.paint.Color
 import scalafx.scene.paint.Color._
 import scalafx.scene.paint._
 import scalafx.scene.text.Text
-import scalafx.scene.control.{Button, TextField}
-import scalafx.scene.image.{Image, ImageView, PixelReader}
+import scalafx.scene.control.{Button, TextField, Slider, Label}
+import scalafx.scene.image.{Image, ImageView, PixelReader, WritableImage}
 import scalafx.scene.Cursor
+import scala.math._
+
+import javafx.embed.swing.SwingFXUtils
+import java.io.File
+import java.net.URL
+import javax.imageio.ImageIO
+import java.awt.image.BufferedImage
 
 object Main extends JFXApp3 :
   override def start(): Unit =
-
-    // ucitavanje slike lokalno:
-    val image = new Image("file:/home/irina/Desktop/image.jpeg")
-    val imageView = new ImageView(image)
-
-    // url slika:
+        
+    // ucitavanje slike pomocu url:
     val url = "https://images.squarespace-cdn.com/content/v1/54e7a1a6e4b08db9da801ded/1600464166638-5C0HPLJ9HT1TZBEHWVJR/Screen+Shot+2020-09-17+at+2.44.15+PM.png"
-    val image2 = Image(url)
-    val editImage = new EditImage(image2)
-    val imageView2 = new ImageView(image2)
+    var image = ImageIO.read(new URL(url))
+
+    val writableImage = new WritableImage(image.getWidth, image.getHeight)
+    val pixelWriter = writableImage.pixelWriter
+    for (x <- 0 until image.getWidth; y <- 0 until image.getHeight) {
+      val argb = image.getRGB(x, y)
+      pixelWriter.setArgb(x, y, argb)
+    }
+
+    val imageView = new ImageView(writableImage)
+    var editImage = new EditImage(image)
+
     // namestanje dimenzija:
-    imageView2.fitWidth = 200
-    imageView2.fitHeight = 200 * image2.height.value / image2.width.value
+    var imageViewWidth = min(600, image.getWidth())
+    var imageViewHeight = min(350, imageViewWidth * image.getHeight() / image.getWidth())
+    imageViewWidth = imageViewHeight * image.getWidth() / image.getHeight()
+    imageView.fitWidth = imageViewWidth
+    imageView.fitHeight = imageViewHeight
 
-    /*
-    // rgb (0,0) piksela
-    val pixelReader = image.pixelReader.get
-    val color = pixelReader.getColor(0,0)
-    val red = (color.red * 255).toInt
-    val green = (color.green * 255).toInt
-    val blue = (color.blue * 255).toInt
-    println(s"r:$red, g:$green, b:$blue")
-    */
 
+    // promena slike nakon izvrsene funkcije
+    def updateImage(image: BufferedImage, width : Int = imageViewWidth, height : Int = imageViewHeight) = {
+      editImage = new EditImage(image)
+      val newImage = SwingFXUtils.toFXImage(image, null)
+      imageView.setImage(newImage)
+
+      // namestanje dimenzija:
+      imageViewWidth = min(600,width)
+      imageViewHeight = min(350, imageViewWidth * height / width)
+      imageViewWidth = imageViewHeight * width / height
+
+      imageView.fitWidth = imageViewWidth
+      imageView.fitHeight = imageViewHeight
+    }
 
     stage = new JFXApp3.PrimaryStage:
       width = 800
       height = 500
       title = "Obrada slika"
-
-      // SADRZAJ ------------------------------------------------
 
       // stil svih dugmica
       def setButtonStyle(button: Button): Unit = {
@@ -63,49 +81,8 @@ object Main extends JFXApp3 :
       }
 
 
-      // dugme za ucitavanje slike iz baze, treba je napraviti!!!
-      val buttonLoadFromLibrary = new Button {
-        text = "Load from library"
-        onAction = _ => {
-          val image2 = Image("file:/home/irina/Desktop/image.jpeg")
-          imageView2.image = image2
-          // resetovanje dimenzija slike
-          imageView2.fitWidth = 200
-          imageView2.fitHeight = 200 * image2.height.value / image2.width.value
-        }
-      }
+      // SADRZAJ ------------------------------------------------
 
-      // text field za pisanje URL-a
-      val textFieldURL=new TextField {
-          layoutX = 50
-          layoutY = 50
-          prefWidth = 50
-        }
-
-      // dugme za ucitavanje slike pomocu URL iz text field-a
-      val buttonLoadURL = new Button {
-        text = "Load using URL:"
-        onAction = _ => {
-          val url = textFieldURL.text()
-          val image2 = Image(url)
-          // npr: https://img.freepik.com/free-photo/red-white-cat-i-white-studio_155003-13189.jpg?w=360
-          imageView2.image = image2
-          // resetovanje dimenzija slike
-          imageView2.fitWidth = 200
-          imageView2.fitHeight = 200 * image2.height.value / image2.width.value
-        }
-      }
-
-      // DUGMICI ZA SLIKE:
-      // dugme za izvrsavanje neke funkcije
-      val buttonAction1 = new Button {
-        text = "Do function"        
-        onAction = _ => {
-          editImage.myMethod2()
-        }
-      }
-
-      // dugme za cuvanje slike
       val buttonSave = new Button {
         text = "Save image"        
         onAction = _ => {
@@ -113,11 +90,100 @@ object Main extends JFXApp3 :
         }
       }
 
+      // napraviti!!!
+      val buttonUndo = new Button { 
+        val imgUndo = Image("https://img.icons8.com/?size=512&id=70793&format=png");
+        val undo = new ImageView(imgUndo)
+        undo.setFitHeight(15)
+        undo.setFitWidth(15)
+        style = "-fx-background-color: null; -fx-border-color: null;"
+        graphic = undo
+
+        onMouseEntered = _ => {cursor = Cursor.HAND}
+        onMouseExited  = _ => cursor = Cursor.DEFAULT
+
+        onAction = _ => {
+          println("undo")
+        }
+      }
+
+      // napraviti!!!
+      val buttonRedo = new Button { 
+        val imgRedo = Image("https://img.icons8.com/?size=512&id=70816&format=png");
+        val redo = new ImageView(imgRedo)
+        redo.setFitHeight(15)
+        redo.setFitWidth(15)
+        style = "-fx-background-color: null; -fx-border-color: null;"
+        graphic = redo
+
+        onMouseEntered = _ => {cursor = Cursor.HAND}
+        onMouseExited  = _ => cursor = Cursor.DEFAULT
+
+        onAction = _ => {
+          println("redo")
+        }
+      }
+
+      // dugme za ucitavanje slike iz baze, treba je napraviti!!!
+      val buttonLoadFromLibrary = new Button {
+        text = "Load from library"
+        onAction = _ => {
+          image = ImageIO.read(new File("/home/irina/Desktop/image.jpeg"))
+          updateImage(image, image.getWidth(), image.getHeight())
+        }
+      }
+
+      // text field za pisanje URL-a
+      val textFieldURL=new TextField {
+        layoutX = 50
+        layoutY = 50
+        prefWidth = 50
+      }
+
+      // dugme za ucitavanje slike pomocu URL iz text field-a
+      val buttonLoadURL = new Button {
+        text = "Load using URL:"
+        onAction = _ => {
+          val url = textFieldURL.text()
+          image = ImageIO.read(new URL(url))
+          updateImage(image, image.getWidth(), image.getHeight())
+        }
+      }
+
+
+      // DUGMICI ZA SLIKE:
+      
+      val buttonMirror = new Button {
+        text = "Mirror"        
+        onAction = _ => updateImage(editImage.mirror())
+      }
+
+      val buttonRotate = new Button {
+        text = "Rotate"        
+        onAction = _ => updateImage(editImage.rotate(), imageViewHeight, imageViewWidth)
+      }
+      
+      val labelBrightness = new Label("Brightness:"){
+        layoutX = 50
+        layoutY = 100
+        style = "-fx-font: normal bold 8pt sans-serif; -fx-text-fill: gray; -fx-background-color: null; -fx-border-color: null;"
+      }
+
+      var prevValue = 1.0
+      val sliderBrightness = new Slider(0.5,1.5,1){
+        onMouseReleased = _ => {
+          // zelimo da slider radi sa pocetnom slikom, a ne da menja vec promenjenu
+          updateImage(editImage.brightness(1 + value.value - prevValue))
+          prevValue = value.value
+        }
+      }
+
       // SADRZAJ ------------------------------------------------
 
       setButtonStyle(buttonLoadFromLibrary)
       setButtonStyle(buttonLoadURL)
-      setButtonStyle(buttonAction1)
+      setButtonStyle(buttonMirror)
+      setButtonStyle(buttonRotate)
       setButtonStyle(buttonSave)
 
       val vBoxLeft = new VBox {
@@ -127,11 +193,13 @@ object Main extends JFXApp3 :
           prefHeight = 440
 
           children = Seq(
-            buttonLoadFromLibrary,
-            buttonLoadURL,
-            textFieldURL,
+            new HBox(buttonUndo,buttonRedo),
             buttonSave,
-            buttonAction1
+            buttonLoadFromLibrary,
+            buttonLoadURL, textFieldURL,
+            buttonMirror,
+            buttonRotate,
+            labelBrightness, sliderBrightness
           )
       }
         
@@ -146,7 +214,7 @@ object Main extends JFXApp3 :
                 prefWidth = 630
                 prefHeight = 440
                 alignment = Pos.Center
-                children = Seq(imageView2)
+                children = Seq(imageView)
               }
           )
         }
