@@ -12,6 +12,8 @@ import scalafx.scene.control.{Button, TextField, Slider, Label}
 import scalafx.scene.image.{Image, ImageView, PixelReader, WritableImage}
 import scalafx.scene.Cursor
 import scala.math._
+//FILE CHOOSER:
+import scalafx.stage.FileChooser
 
 import javafx.embed.swing.SwingFXUtils
 import java.io.File
@@ -35,6 +37,7 @@ object Main extends JFXApp3 :
 
     val imageView = new ImageView(writableImage)
     var editImage = new EditImage(image)
+    var nbImage = editImage
 
     // namestanje dimenzija:
     var imageViewWidth = min(600, image.getWidth())
@@ -88,6 +91,17 @@ object Main extends JFXApp3 :
         onAction = _ => {
           editImage.save()
         }
+/*
+        text = "Save as"        
+        onAction = _ => {
+          //editImage.save()
+          val fileChooser = new FileChooser
+          val selectedFile = fileChooser.showSaveDialog(stage)
+          if (selectedFile != null) {
+                    editImage.save(selectedFile)
+          }
+        }
+*/
       }
 
       // napraviti!!!
@@ -124,12 +138,17 @@ object Main extends JFXApp3 :
         }
       }
 
-      // dugme za ucitavanje slike iz baze, treba je napraviti!!!
+      // dugme za ucitavanje slike iz baze                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       val buttonLoadFromLibrary = new Button {
         text = "Load from library"
         onAction = _ => {
-          image = ImageIO.read(new File("/home/irina/Desktop/image.jpeg"))
+          //image = ImageIO.read(new File("/home/irina/Desktop/image.jpeg"))
+          //updateImage(image, image.getWidth(), image.getHeight())
+          val FileChooser = new FileChooser
+          val selectedFile = FileChooser.showOpenDialog(stage)
+          image = ImageIO.read(selectedFile)
           updateImage(image, image.getWidth(), image.getHeight())
+          nbImage = editImage
         }
       }
 
@@ -152,15 +171,21 @@ object Main extends JFXApp3 :
 
 
       // DUGMICI ZA SLIKE:
-      
+                                                                                               //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       val buttonMirror = new Button {
         text = "Mirror"        
-        onAction = _ => updateImage(editImage.mirror())
+        onAction = _ => {
+          updateImage(editImage.mirror())
+          nbImage = editImage
+        }
       }
 
       val buttonRotate = new Button {
         text = "Rotate"        
-        onAction = _ => updateImage(editImage.rotate(), imageViewHeight, imageViewWidth)
+        onAction = _ => {
+          updateImage(editImage.rotate(), imageViewHeight, imageViewWidth)
+          nbImage = editImage
+        }
       }
       
       val labelBrightness = new Label("Brightness:"){
@@ -173,7 +198,8 @@ object Main extends JFXApp3 :
       val sliderBrightness = new Slider(0.5,1.5,1){
         onMouseReleased = _ => {
           // zelimo da slider radi sa pocetnom slikom, a ne da menja vec promenjenu
-          updateImage(editImage.brightness(1 + value.value - prevValue))
+          editImage = nbImage
+          updateImage(editImage.brightness(value.value))
           prevValue = value.value
         }
       }

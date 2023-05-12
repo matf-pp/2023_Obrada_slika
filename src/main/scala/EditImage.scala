@@ -42,7 +42,6 @@ class EditImage(val img: BufferedImage) {
             out.setRGB(h - y - 1, x, img.getRGB(x, y) & 0xffffff)
         }
     }
-    
     out
     }
 
@@ -72,5 +71,12 @@ class EditImage(val img: BufferedImage) {
 
     out
     }
+/*
+    def blur (): BufferedImage = {
+        val w = img.getWidth
+        val h = img.getHeight
+
+
+    }*/
 }
 
