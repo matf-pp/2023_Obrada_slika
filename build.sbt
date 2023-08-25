@@ -25,3 +25,8 @@ lazy val root = project
         .map(m => "org.openjfx" % s"javafx-$m" % "16" classifier osName)
     }
   )
+  mainClass in (Compile, packageBin):=Some("Main")
+  assemblyMergeStrategy in assembly := {
+    case PathList("META-INF", _*) => MergeStrategy.discard
+    case _                        => MergeStrategy.first
+  }

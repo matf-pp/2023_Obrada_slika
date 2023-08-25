@@ -76,7 +76,8 @@ def test() = {
    ImageIO.write(photo4, "jpg", new File("brightness.jpg"))
 }
 
-
+/*
 @main def Pokreni = {
    test()
 }
+*/
