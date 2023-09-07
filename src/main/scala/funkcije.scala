@@ -75,9 +75,3 @@ def test() = {
    ImageIO.write(photo3, "jpg", new File("rotate.jpg"))
    ImageIO.write(photo4, "jpg", new File("brightness.jpg"))
 }
-
-/*
-@main def Pokreni = {
-   test()
-}
-*/
