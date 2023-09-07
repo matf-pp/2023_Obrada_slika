@@ -91,20 +91,8 @@ object Main extends JFXApp3 :
         onAction = _ => {
           editImage.save()
         }
-/*
-        text = "Save as"        
-        onAction = _ => {
-          //editImage.save()
-          val fileChooser = new FileChooser
-          val selectedFile = fileChooser.showSaveDialog(stage)
-          if (selectedFile != null) {
-                    editImage.save(selectedFile)
-          }
-        }
-*/
       }
 
-      // napraviti!!!
       val buttonUndo = new Button { 
         val imgUndo = Image("https://img.icons8.com/?size=512&id=70793&format=png");
         val undo = new ImageView(imgUndo)
@@ -121,7 +109,6 @@ object Main extends JFXApp3 :
         }
       }
 
-      // napraviti!!!
       val buttonRedo = new Button { 
         val imgRedo = Image("https://img.icons8.com/?size=512&id=70816&format=png");
         val redo = new ImageView(imgRedo)
@@ -138,12 +125,10 @@ object Main extends JFXApp3 :
         }
       }
 
-      // dugme za ucitavanje slike iz baze                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      // dugme za ucitavanje slike iz baze
       val buttonLoadFromLibrary = new Button {
         text = "Load from library"
         onAction = _ => {
-          //image = ImageIO.read(new File("/home/irina/Desktop/image.jpeg"))
-          //updateImage(image, image.getWidth(), image.getHeight())
           val FileChooser = new FileChooser
           val selectedFile = FileChooser.showOpenDialog(stage)
           image = ImageIO.read(selectedFile)
@@ -171,7 +156,7 @@ object Main extends JFXApp3 :
 
 
       // DUGMICI ZA SLIKE:
-                                                                                               //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      
       val buttonMirror = new Button {
         text = "Mirror"        
         onAction = _ => {
@@ -197,7 +182,6 @@ object Main extends JFXApp3 :
       var prevValue = 1.0
       val sliderBrightness = new Slider(0.5,1.5,1){
         onMouseReleased = _ => {
-          // zelimo da slider radi sa pocetnom slikom, a ne da menja vec promenjenu
           editImage = nbImage
           updateImage(editImage.brightness(value.value))
           prevValue = value.value
