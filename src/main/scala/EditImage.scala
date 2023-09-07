@@ -71,12 +71,5 @@ class EditImage(val img: BufferedImage) {
 
     out
     }
-/*
-    def blur (): BufferedImage = {
-        val w = img.getWidth
-        val h = img.getHeight
-
-
-    }*/
 }
 
